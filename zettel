@@ -6,11 +6,11 @@ vim $DIR$SLIP
 
 if [[ -f ~/z/slips/$SLIP ]]; then
   cd $DIR
-  heading=$(echo "$DIR$SLIP" | sed 's/# //')
+  heading=$(sed 's/# //' $DIR$SLIP)
   test -n "$heading" || (echo "Slip main head not proper." && exit 1)
   git pull -q
   echo "Slip committed: $heading"
-  git add -A "$DIR/$SLIP" &>/dev/null
+  git add -A "$DIR$SLIP" &>/dev/null
   git commit -m "$heading" &>/dev/null
   git push &>/dev/null
   cd -
