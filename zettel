@@ -1,4 +1,6 @@
 #!/usr/bin/bash
+set -e
+
 SLIP=$(date +%Y%m%d%H%M%S)
 DIR=~/z/slips/
 
@@ -6,7 +8,7 @@ vim $DIR$SLIP
 
 if [[ -f ~/z/slips/$SLIP ]]; then
   cd $DIR
-  heading=$(sed 's/# //' $DIR$SLIP)
+  heading=$(sed -n -e '1 s/# //p' $DIR$SLIP)
   test -n "$heading" || (echo "Slip main head not proper." && exit 1)
   git pull -q
   echo "Slip committed: $heading"
