@@ -1,0 +1,25 @@
+# Writing and debugging scripts
+
+First line (#!/path/to/binary) denotes the binary used to interpret contents, most commonly a shell or other interpreter like python.
+In the head of a script, it is useful to set shell parameters with set. 
+
+## Some useful flags for set command
+
+To get full list of opt exec `set --help` of the shell utilized for the script.
+
+```markdown
+- `-e`, exits the script if a command contained does not execute properly (non-zero exit code).
+- `-f`, disable file name generation (globbing).
+- `-x`, prints contained commands and their arguments as interpreted (useful for debugging).
+- `-u`, treat unset variables as errors -- powerful together with `-e`.
+- `-v`, print input lines as they're read by a shell.
+```
+
+To run a script within the current shell -- source it. Script interaction will carry over onto the current shell.
+
+## Debugging
+
+To debug a whole script, it is possible to run `bash -x script`; for a portion, use `set -x; *portion-to-be-debugged*; set +x`.
+
+# TAGS
+shell scripting linux debugging set
