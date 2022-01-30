@@ -1,0 +1,37 @@
+# The Bash environment
+
+## Default auto initialization
+
+Interactively invoked, bash reads from `/etc/profile` to set syswide config. Syswide app config is commonly defined within `/etc/profile.d`.
+Since `/etc/profile` is read syswide to all shells, it is more common to set syswide config specific to bash shell in `/etc/bashrc`.
+
+## Variables
+
+Bash keeps two types of variables: global and local. 
+
+Apart from scope, there are 4 different types of a variable:
+
+* String
+* Integer
+* Constant
+* Array
+
+By convention, global variables tend to be capitalized.
+
+### Global variables
+
+Available in all shells, can be viewed by executing `env`.
+
+### Local variables
+
+Only avaiable in the current shell. Viewed executing `set`; also displaying all the methods.
+
+Most shell scripts execute in a private env. Child processes do not inherit vars unless exported by parent shell. Variables exported are called environment variables.
+
+### Special reserved variables
+
+There are several variables reserved by bash, a few of them are useful, e.g. RANDOM. Which generates a random int from 0 to 32767, seeded by setting.
+Apart from variables, there are many special parameters of which some are especially useful:
+* `$@` expands positional parameters, starting from one. When expansion within quotes each parameter expands to separate words.
+* `$#` the amount of positional parameters provided.
+* `$?` expands the exit status of most recently executed foreground pipeline.
