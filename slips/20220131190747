@@ -1,0 +1,27 @@
+# Some notes about regexp
+
+A regular expression is a pattern, describing a set of strings. Through the use of metacharacters it is possible to manipulate the set of strings, allowing powerful string matching in several applications.
+
+## The list of metacharacters
+* .     Matches any single character
+* ?     Preceding item is optional and matched once or not at all
+* *     Preceding item matched 0 times or more
+* +     Preceding item matched 1 times or more
+* {N}   Preceding item matched N times # e.g. 'e{2}' will match keep
+* {N,}  Preceding item matched N times or more
+* {N,M} Preceding item is matched N times up until M
+* -     Represents a range if not first/last or ending point in a list
+* ^     Matches empty string at start of a line; represents characters *not* in list
+* $     Matches empty string at end of a line
+* \b    Matches empty string at edge of word
+* \B    Matches empty string at provided not at edge of a word
+* \<    Matches empty string at beginning of a word
+* \>    Matches empty string at end of a word
+
+## Compatibility note
+
+Bash only supports basic or extended regexp. Usually regexps from e.g. [regex101](https://regex101.com/) is formatted as PCRE (Perl Compatible Reg Exp).
+
+
+TAGS bash regexp reg exp metacharacters
+
