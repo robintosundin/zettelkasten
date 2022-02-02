@@ -1,0 +1,36 @@
+# sed stream editor
+
+Short for "Stream EDitor", sed manipulate files or pipes with the result sent to stdout. This makes it natural in scripts and commands.
+
+## Editing commands
+
+Editing commands are similar to vi:
+
+* a\ - Append text below current line
+* c\ - Change text in current line with new text
+* d  - Delete text
+* i\ - Insert text above current line
+* p  - Print text
+* r  - Read a file
+* s  - Search and replace text
+* w  - Write to a file
+
+Options:
+
+* -e SCRIPT       - Add commands (SCRIPT) to be ran while processing input
+* -f SCRIPT-FILE  - Add a file with commands to be ran while processing input
+* -n              - Silent mode
+* -i              - Edit *files* in place
+* -E              - Use extended regexp in script
+
+Ranges of lines can be invoked with `sed '2,4d' example`. Range cursors can be many things, e.g. matches on a line or metacharacters:
+
+```markdown
+sed -n '/a/,/b/p' example.
+sed -n '/a/,$p' example.
+```
+
+Indentation and new lines can be added with \n, for example: `sed -i '/manpath/i\0\n    4\n        8\n    4\n0' b.tmp` which edits b.tmp in place, adding an indented "triangle" above matched line. 
+
+
+TAGS bash sed
