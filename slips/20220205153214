@@ -1,0 +1,34 @@
+# Quick intro to awk
+
+awk is a data-driven programming language created to search files for patterns in text units/lines. In contrast to languages being procedural, writing scripts to manipulate data is much more terse -- no need for describing each step for program to take.
+
+Programs are fed to awk along with input file or pipe to operate upon. If the program is short, it can be supplied directly.
+
+## The print program
+
+Default provided program *print* outputs selected data from data input. E.g. `awk{'print $1'}` prints the first *column* of provided data.
+To *precede* or *succeed* ordinary output use: `BEGIN {print "starting now" $2}` or `END {print "ending now" $1}`.
+
+## awk variables
+
+During processing, some variables can be edited such as FS and OFS; some cannot such as NR (provides number of records processed).
+
+### field separator
+
+It is possible to change the *input field separator* (e.g. :) with the use of `BEGIN {FS=:}`.
+One can change the *output field separator* (e.g. ;) with the use of `BEGIN {OFS=;}`, default is space and is triggered by e.g. `{print $1,$2}`.
+
+### user defined variables
+
+It is possible to define a new variable by e.g. {int_total=int_total+$5}, for each record processed, value in record 5 would be added.
+
+### printf
+
+To have even more control of format, it is possible to printf instead of print with awk.
+
+## other
+
+awk has a steeper learning curve than perl but perl is more widely used.
+More complex awk/perl scripts share reputation of being imcomprehensible for both author and peer -- always document code.
+
+TAGS awk
