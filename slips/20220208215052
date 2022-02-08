@@ -1,0 +1,28 @@
+# Goofy way of storing input securely
+
+In order to store the value from an interactive vim it is necessary to jump through hoops, if one wants to do it securely.
+
+## mktemp
+
+Accomplishes sane cleanup of a temporary variable to store output from an interactive vim session.
+
+## dotlockfile
+
+To not have any conflicting issues it is possible to lock down execution of the script with a dotlockfile, tied to the pid.
+
+```sh
+#!/bin/bash
+dotlockfile -p -r 0 /tmp/lock_test # locks a file with process id, if exists it will retry 1 time (5sec sleep)
+read -p "Do you want to input a lot of stuff? (Y/N):" input
+input=$(echo $input | awk '{print tolower($input)}')
+echo "$input"
+if [ $input = "y" ]; then
+  tmp="$(mktemp)"
+  vim "${tmp}"
+  tmp2="$(cat ${tmp})"
+  printf "You entered:\n$tmp2\n"
+else
+  read -p "enter tiny: " tiny
+fi
+dotlockfile -u /tmp/lock_test # "unlock" the script to execute by other process-id
+```
