@@ -1,0 +1,78 @@
+# Conditional statements
+
+When scripting it is common to be in a position where things are to be run on the condition of something. The if construct is used for this. In Bash the common way of perform a test is through `test`, which as a lot of built-in comparisons available; to find out which, check `man test`.
+
+## Particularly useful conditions
+
+* -a FILE             true if file exists
+* -f FILE             true if file exists and is a regular file
+* FILE1 -nt FILE2     true if FILE1 changed more recently than FILE2
+* FILE1 -ot FILE2     true if FILE1 is older than FILE2 (null regarded as infinity)
+* -z STRING           true if length(STRING) == 0
+* -n STRING           true if length(string) != 0
+
+## Combining expressions
+
+* [(EXPR)]            Returns value of EXPR, may be used to force precedence
+* [EXPR1 -o EXPR2]    -o is acting as an OR operator on expressions
+* [EXPR1 -a EXPR2]    -a is acting as an AND operator on expressions
+
+Note, instead of using single brackets (for POSIX-compliance i.e. portability); one can use dobule brackets. With double brackets, more tools are at disposal for conditionals.
+
+## Double brackets
+
+Supported by bash, zsh, ksh etc. (if specifying the shell by shebang, use double brackets instead).
+
+* instead of writing -o one can use ||
+* instead of -a one can use &&
+* use =~ to perform conditional on regexp (see example below)
+
+## Examples
+
+```bash
+if [[ $# -ne 1 || ! $1 =~ ^(ABC|DEF|GHI|JKL)$ ]]
+then
+  echo "Usage: ./myscript.sh [ABC | DEF | GHI | JKL]" >&2
+  exit 1
+fi
+```
+
+`$#` will return the amount of entered positional parameters, `! $1 =~ ^(ABC|DEF|GHI|JKL)$` will be true if positional parameter is not ABC or DEF or GHI or JKL.
+
+
+`if [ $? -eq 0 ]; then echo 'last command exited with 0';fi`
+
+`if ! grep $USER /etc/passwd; then echo 'you're a weeeeezard Haarry (and also a user)'`
+I.e. you can directly use the return code of a command, without brackets.
+
+`if [[ "wildcard" == w* ]]; then echo "wild stuff"; fi`
+
+
+## Exit code applications
+
+If writing a larger program with several cases, it can be useful to have a base script with nested if statements, returning an exit code on specific conditions. To do this simply type `exit NBR` where NBR is an integer. This script can then be invoked in another in a manner like below:
+
+**NOTE**: Existing commands (e.g. ls) have a full list of already defined exit codes, which can be very useful with a case. Moreover, instead of numbers for a case, it is possible to use ranges and wildcards, e.g.: `[1-6]*)`.
+
+```
+#!/bin/bash
+export a="$1"
+export b="$2"
+
+ext="/path/to/exitcodescript.sh"
+$ext $a $b
+case $? in
+1)
+  echo "value of a and b returned exit code 1"
+  ;;
+2)
+  echo "exit code 2"
+  ;;
+3)
+  echo "exit code 3"
+  ;;
+*)
+  echo "exit code is anything but 1,2 or 3"
+  ;;
+esac
+```
