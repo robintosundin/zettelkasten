@@ -4,7 +4,11 @@ set -e
 slip=$(date +%Y%m%d%H%M%S)
 dir=~/z/slips/
 
-vim $dir$slip
+if [ -a /usr/bin/vimx ]; then
+  /usr/bin/vimx $dir$slip
+else
+  /usr/bin/vi $dir$slip
+fi
 
 if [[ -f ~/z/slips/$slip ]]; then
   cd $dir
