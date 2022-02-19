@@ -2,7 +2,7 @@
 set -e
 
 slip=$(date +%Y%m%d%H%M%S)
-dir=~/z/slips/
+dir=~/zettelkasten/slips/
 
 if [ -a /usr/bin/vimx ]; then
   /usr/bin/vimx $dir$slip
@@ -10,7 +10,7 @@ else
   /usr/bin/vi $dir$slip
 fi
 
-if [[ -f ~/z/slips/$slip ]]; then
+if [[ -f $dir$slip ]]; then
   cd $dir
   heading=$(sed -n -e '1 s/# //p' $dir$slip)
   test -n "$heading" || (echo "Slip main head not proper." && exit 1)
@@ -20,6 +20,6 @@ if [[ -f ~/z/slips/$slip ]]; then
   git commit -m "$heading" &>/dev/null
   git push &>/dev/null
   cd - &>/dev/null
-  else
-    echo "Slipped the mind, nevermind."
+else
+  echo "Slipped the mind, nevermind."
 fi
