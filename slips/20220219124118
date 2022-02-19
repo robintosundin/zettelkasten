@@ -1,0 +1,16 @@
+# Discord forces update
+
+When Discord releases a new update, they force the user to update. Until an RPM is packaged (discord only supplies a Ubuntu one) use a local installation.
+
+In order to accomplish local install, it is possible to convert the deb package into an rpm with alien tool.
+
+```bash
+sudo alien --scripts -r -v -g discord.deb
+sudo sed -i 's#%dir "/"##' discord/discord.spec
+sudo sed -i 's#%dir "/usr/bin/"##' discord/discord.spec
+sudo rpmbuild --target=x86_64 --buildroot ~/Downloads/discord -bb discord.spec
+```
+
+Then simply install the local rpm with `sudo dnf install discord.rpm`.
+
+Side-note: one could use `sed -i 's/%dir "\/"//'` instead of the way above but with hash as delimiter it's not forced to escape slash.
